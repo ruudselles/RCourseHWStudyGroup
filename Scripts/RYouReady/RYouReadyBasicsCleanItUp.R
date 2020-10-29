@@ -76,3 +76,43 @@ data_summarize <- Example_LongFormat %>%
             sd_VASpain = sd(vasPijnGemiddeld_1,na.rm=TRUE))
 
 view(data_summarize)
+
+
+#comparing three ways of dealing with a new variable:
+Example_LongFormat%>% 
+  mutate(vasPijnGemiddeld_50 = vasPijnGemiddeld_1>50)
+
+Example_LongFormat <- Example_LongFormat%>% 
+  mutate(vasPijnGemiddeld_50 = vasPijnGemiddeld_1>50)
+
+new_frame <- Example_LongFormat%>% 
+  mutate(vasPijnGemiddeld_50 = vasPijnGemiddeld_1>50)
+
+
+
+#Analyse maximum reported pain seperately for males and females, and patients operated on ther left and on their right side
+data_summarize <- Example_LongFormat %>%
+  group_by(Geslacht, zijde) %>%
+    summarize(max_VASpain = max(vasPijnGemiddeld_1, na.rm=TRUE))
+
+
+
+#use the summarize construct shown in the video to calculate maximum, minimum, average and median average pain for both males and females operated on either left or right hand. Save the results in a new data frame called PainMalesFemalesLeftRigth.
+PainMalesFemalesLeftRight <- Example_LongFormat %>%
+  group_by(Geslacht, zijde) %>% 
+    summarize(max_VASpain = max(vasPijnGemiddeld_1, na.rm=TRUE),
+            min_VASpain = min(vasPijnGemiddeld_1,na.rm=TRUE),
+            mean_VASpain = mean(vasPijnGemiddeld_1,na.rm=TRUE),
+            median_VASpain = median(vasPijnGemiddeld_1,na.rm=TRUE),
+            sd_VASpain = sd(vasPijnGemiddeld_1,na.rm=TRUE))
+
+
+#Create variable pain_average, by averaging the three separate items scored by the patients ("vasPijnGemiddeld_1","vasPijnRust_1", "vasPijnBelasten_1")
+data_long <- Example_LongFormat %>%
+  mutate(pain_average = ((vasPijnGemiddeld_1 + vasPijnRust_1 + vasPijnBelasten_1)/3),na.rm = TRUE)
+
+#Add to the same pipe a variables that defines if the vasPijnGemiddeld_1 is higher than 50
+data_long <- Example_LongFormat %>%
+  mutate(pain_average = ((vasPijnGemiddeld_1 + vasPijnRust_1 + vasPijnBelasten_1)/3),na.rm = TRUE) %>%
+  mutate(vasPijnGemiddeld_50 = vasPijnGemiddeld_1 > 50)
+
