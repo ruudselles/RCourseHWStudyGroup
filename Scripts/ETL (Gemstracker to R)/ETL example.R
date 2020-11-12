@@ -12,8 +12,6 @@
 # Ref_codebook_added_question.xlsx (optional)
 # Ref_codebook_removed_question.xlsx (optional)
 
-
-
 rm(list = ls())
 
 # Load library
@@ -22,8 +20,6 @@ library(here)
 library(tidyverse)
 library(lubridate)
 library(tidyr)
-
-
 
 # CHECK CODEBOOKS FOR ADDED/REMOVED QUESTIONS ---------------------------------------------------------------------------
 
@@ -88,9 +84,9 @@ if (continue) {
   
   #Select directory which contains survey data
   Survey_73 <-
-    as.data.frame(read_excel("C:/Users/Jeanne/Documents/Equipe/Rcourse/Data/Example survey 73.xlsx"))
+    as.data.frame(read_excel("~/R/RCourseHWStudyGroup/data/ETL/Example survey 73.xlsx"))
   Survey_81 <-
-    as.data.frame(read_excel("C:/Users/Jeanne/Documents/Equipe/Rcourse/Data/Example survey 81.xlsx"))
+    as.data.frame(read_excel("~/R/RCourseHWStudyGroup/data/ETL/Example survey 81.xlsx"))
   
   
  
