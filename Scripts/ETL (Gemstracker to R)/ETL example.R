@@ -3,6 +3,7 @@
 # Updated: 10-11-2020
 
 # Required documents --------------------------------------------------------------------------------------------------
+# Available in //data/ETL folder
 # Codebook_example_73.xlsx
 # Codebook_example_81.xlsx
 # Example survey 73.xlsx
@@ -17,6 +18,7 @@ rm(list = ls())
 
 # Load library
 library(readxl)
+library(here)
 library(tidyverse)
 library(lubridate)
 library(tidyr)
@@ -27,16 +29,17 @@ library(tidyr)
 
 # Load the codebooks for all surveys
 Codebook_73 <-
-  read_excel("C:/Users/Jeanne/Documents/Equipe/Rcourse/Codebook/Codebook_example_73.xlsx")
+  read_excel("~/R/RCourseHWStudyGroup/data/ETL/Codebook_example_73.xlsx")
+
 Codebook_81 <-
-  read_excel("C:/Users/Jeanne/Documents/Equipe/Rcourse/Codebook/Codebook_example_81.xlsx")
+  read_excel("~/R/RCourseHWStudyGroup/data/ETL/Codebook_example_81.xlsx")
 
 # Merge the codebooks into one large codebook and create the variable "rowID"
 Codebook <- rbind(Codebook_73, Codebook_81)  %>%
   unite(id, title, col = "rowID", sep = "_", remove = FALSE)
 
 # Load the reference Codebook
-Ref_Codebook <- read_excel("C:/Users/Jeanne/Documents/Equipe/Rcourse/Reference codebooks/Ref_codebook.xlsx")
+Ref_Codebook <- read_excel("~/R/RCourseHWStudyGroup/data/ETL/Ref_codebook.xlsx")
 
 #Uncomment the line below if you want to check the behavior when a question is added compared to the reference
 #Ref_Codebook <-  read_excel("C:/Users/Jeanne/Documents/Equipe/Rcourse/Reference codebooks/Ref_codebook_added_question.xlsx")
