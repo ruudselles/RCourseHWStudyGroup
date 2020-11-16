@@ -27,12 +27,19 @@ library(tidyr)
 Codebook_73 <-
   read_excel("~/R/RCourseHWStudyGroup/data/ETL/Codebook_example_73.xlsx")
 
+#bekijk het codeboek in R met:
+view(Codebook_73)
+
 Codebook_81 <-
   read_excel("~/R/RCourseHWStudyGroup/data/ETL/Codebook_example_81.xlsx")
 
-# Merge the codebooks into one large codebook and create the variable "rowID"
+
+# Merge the codebooks into one large codebook and create the variable "rowID" by combining the ID and title information
 Codebook <- rbind(Codebook_73, Codebook_81)  %>%
   unite(id, title, col = "rowID", sep = "_", remove = FALSE)
+
+#bekijk nu het resultaat
+view(Codebook)
 
 # Load the reference Codebook
 Ref_Codebook <- read_excel("~/R/RCourseHWStudyGroup/data/ETL/Ref_codebook.xlsx")
