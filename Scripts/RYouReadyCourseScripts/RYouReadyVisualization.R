@@ -7,7 +7,7 @@ library(here)
 library(readr)
 library(ggbeeswarm)
 
-# Importeren data  -------------
+# Import data  -------------
 load(here("data", "Example_LongFormatHashed.RData"))
 
 # Plot maken met ggplot---------
@@ -34,12 +34,11 @@ Example_LongFormat %>%
   ggplot(aes(x=Geslacht, y=vasPijnGemiddeld_1))+
   geom_jitter()
 
-view(data_long)
-
+view(Example_LongFormat)
 
 # nu de groep verdelen intake, 3 maanden en 12maanden middels rounddescription
 Example_LongFormat %>%
-  ggplot(aes(x=rounddescription, y=vasPijnGemiddeld_1)+
+  ggplot(aes(x=rounddescription, y=vasPijnGemiddeld_1))+
   geom_jitter() +
   coord_flip()
 
@@ -61,13 +60,12 @@ Example_LongFormat %>%
   geom_jitter() +
   facet_wrap(~rounddescription)
 
-# Combinatie van filter en plot -------------
+# Combinatie van filter en plot ------------- Hier krijg ik een witvlak als plot met foutmelding: Error: Faceting variables must have at least one value
 Example_LongFormat %>%
   filter(vasPijnGemiddeld_1 <1) %>%
   filter(vasPijnGemiddeld_1>100)%>%
   ggplot(aes(x=Geslacht, y=vasPijnGemiddeld_1, colour = Geslacht))+
-  geom_jitter() +
-  facet_wrap(~rounddescription)
+  geom_jitter() + facet_wrap(~rounddescription)
 
 # Opslaan met ggsave -----------------
 
@@ -76,19 +74,20 @@ ggsave("vaspijngemgeslacht.png")
 # Bar en colom graphs ----------
 
 Example_LongFormat %>%
-  group_by(Geslacht)%>%
   na.omit()%>%
+  group_by(Geslacht)%>%
   summarise(mean = mean(vasPijnGemiddeld_1),
     sd = sd(vasPijnGemiddeld_1),
     n = n(),
     stderr=sd/sqrt(n))%>%
   ggplot(aes(x=Geslacht, y=mean))+
   geom_col() +
-  geom_errorbar(aes(x=Geslacht, ymin = mean-stderr, xmax = mean+stderr))
+  geom_errorbar(aes(x=Geslacht, ymin = mean-stderr, ymax = mean+stderr))
 
 # Correlation and scatterplot -------------
 
 Example_LongFormat%>%
+  na.omit()%>%
   ggplot(aes(x= vasPijnGemiddeld_1, y= vasFunctie_1))+
   geom_point() +
 geom_smooth()

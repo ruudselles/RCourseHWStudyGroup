@@ -18,45 +18,36 @@ view(cleannames_data_long)
 
 # Create new dataframe ----------------
 
-# Waarbij je de volgorde kan aanpassen of bepaalde variabelen kan selecteren.
-# Waarbij select_data_long de naam is van het nieuwe dataframe. 
-# En je na select eerst aangeeft vanuit welke dataset deze informatie moet worden genomen en daarna welke variabelen je wilt selecteren
 select_data_long <-select(Example_LongFormat, behandeling, rounddescription, everything())
                      
 # Delete variables with -
 select_data_long <- select(select_data_long, -Patient.traject.ID)
 
 # Pipe function -------------
-
-# Pipe function %>%, daarmee kan je meerdere functies achter elkaar zetten en stel je direct 
-# al vast uit welke dataset dit gehaald moet worden en hoef je dat dus niet meer te specificeren
 data_long_clean <-Example_LongFormat %>%
   clean_names() %>%
   select(behandeling, rounddescription, everything()) %>%
   select(-patient_traject_id)
 
-# Met de summary function kan je samenvatting krijgen van de data in een bepaalde dataframe
+# Summarize
 summary(Example_LongFormat)
 
-# Data op gemiddelde pijn sorteren, dan maak je eerst nieuwe dataset aan 
-# en laat je eerst zien uit welke data set je dit haalt (hier data_long)
-# dan sorteer je middels arrange en kan je specifiek alleen vas pijn gemiddeld selecteren
+# Select variables
 data_desc <- Example_LongFormat%>%
   arrange(desc(vasPijnGemiddeld_1))%>%
   select(vasPijnGemiddeld_1)
   
-
+# Summarize
 summary(data_desc)
   
 # Data filter  -------------
-
-# Data filteren voor alleen vrouwen in een nieuwe dataframe
+# Vrouw
 data_desc_female <- Example_LongFormat%>%
   filter(Geslacht == "Vrouw") %>%
 arrange(desc(vasPijnGemiddeld_1))%>%
   select(vasPijnGemiddeld_1)
 
-# Data filteren voor alleen mannen
+#Man
 data_desc_male <- Example_LongFormat%>%
   filter(Geslacht == "Man") %>%
   arrange(desc(vasPijnGemiddeld_1))%>%
@@ -94,8 +85,7 @@ data_summarize<-Example_LongFormat%>%
   group_by(Geslacht)%>%
   summarize(max_VASpain = max(vasPijnGemiddeld_1, na.rm=TRUE))
 
-# om een filter toe te voegen, in dit voorbeeld voor geslacht. De summarise functie kan je gebruiken om vervolgens deze gegevens te tonen. 
-# Je geeft daarbij een naam aan de variabele (dus bv max_VASpain, dat is als het ware een nieuwe kolom) en met een komma ga je naar de volgende lijn voor een nieuwe optie
+# Group by
 data_summarize<-Example_LongFormat%>%
   group_by(Geslacht) %>%
   summarize(max_VASpain = max(vasPijnGemiddeld_1, na.rm =TRUE),
@@ -104,14 +94,15 @@ data_summarize<-Example_LongFormat%>%
   median_VASpain= median(vasPijnGemiddeld_1, na.rm =TRUE),
   sd_VASpain=sd(vasPijnGemiddeld_1, na.rm = TRUE))
 
+#view 
 view(data_summarize)
 
-# Je kan dit ook voor meerdere variabelen doen, dus bv geslacht en aangedane hand
+#view summarize
 data_summarize<-Example_LongFormat%>%
   group_by(Geslacht, zijde) %>%
   summarise(max_VASpain = max(vasPijnGemiddeld_1, na.rm =TRUE))
   
-# Je kan deze data opslaan in een nieuwe data-frame door dit aan het begin toe te voegen
+# Save in a new dataframe
 PainMalesFemalesLeftRight <- Example_LongFormat%>%
   group_by(Geslacht, zijde) %>%
   summarise(max_VASpain = max(vasPijnGemiddeld_1, na.rm =TRUE),
@@ -122,13 +113,9 @@ PainMalesFemalesLeftRight <- Example_LongFormat%>%
 
 # Mutate-------------
 
-# met mutate voeg je een nieuwe variabele/ kolom toe. Ook hier doe je voor het ( de nieuwe 
-# naam schrijven van de variabele/kolom
-# let op hierbij moet je wel eerst data_long <- data_long%>% schrijven zodat het duidelijk is
 data_long <-Example_LongFormat%>%
   mutate(pain_avarage = mean((vasPijnGemiddeld_1+vasPijnRust_1+vasPijnBelasten_1)/3), na.rm = TRUE)
 
-# is een bepaalde variabele hoger dan 50, zet die in een nieuwe kolom
 data_long <- Example_LongFormat%>%
   mutate(pain_avarage = mean((vasPijnGemiddeld_1+vasPijnRust_1+vasPijnBelasten_1)/3), na.rm = TRUE) %>%
   mutate(vasPijnGemiddeld_50 = vasPijnGemiddeld_1>50)
