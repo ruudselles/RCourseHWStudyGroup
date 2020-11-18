@@ -62,8 +62,16 @@ Example_LongFormat %>%
 
 # Combinatie van filter en plot ------------- Hier krijg ik een witvlak als plot met foutmelding: Error: Faceting variables must have at least one value
 Example_LongFormat %>%
-  filter(vasPijnGemiddeld_1 <1) %>%
-  filter(vasPijnGemiddeld_1>100)%>%
+  filter(vasPijnGemiddeld_1 < 100)
+
+  ggplot(aes(x=Geslacht, y=vasPijnGemiddeld_1, colour = Geslacht))+
+  geom_jitter() +
+  facet_wrap(~rounddescription)
+
+
+Example_LongFormat %>%
+  filter(vasPijnGemiddeld_1 >1) %>%
+  filter(vasPijnGemiddeld_1<100)%>%
   ggplot(aes(x=Geslacht, y=vasPijnGemiddeld_1, colour = Geslacht))+
   geom_jitter() + facet_wrap(~rounddescription)
 
