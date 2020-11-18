@@ -9,6 +9,10 @@ library(janitor)
 #load data -----------
 load("~/R/RCourseHWStudyGroup/data/Example_LongFormatHashed.RData")
 load("~/R/RCourseHWStudyGroup/data/Example_WideFormatHashed.RData")
+load(here("data", "Example_LongFormatHashed.RData"))
+load(here("data", "Example_WideFormatHashed.RData"))
+
+
 
 #Run function clean_names---
 cleannames_data_long <- clean_names(Example_LongFormat)
