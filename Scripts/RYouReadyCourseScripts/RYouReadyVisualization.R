@@ -1,9 +1,7 @@
-<<<<<<< HEAD
 # Load -----------------
 
 library(tidyverse)
 library(here)
-install.packages("ggbeeswarm")
 library(readr)
 library(ggbeeswarm)
 
