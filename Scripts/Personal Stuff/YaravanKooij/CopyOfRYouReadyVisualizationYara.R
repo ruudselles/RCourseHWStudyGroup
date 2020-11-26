@@ -10,56 +10,53 @@ library(ggbeeswarm)
 # Import data  -------------
 load(here("data", "Example_LongFormatHashed.RData"))
 
-# !! Hier staat op de website data_long en data_combined
-# !! Hier staat in antwoord nog data_combined en stap_om week aantal
+# Plot maken met ggplot---------
+# Met ggplot moet je eerst de 'easthetics' beschrijven, dus welke variabelen wil je op 
+# de x- as en welke op de y -as. Vervolgens met een + kan je aangeven welke plot je wilt gebruiken.
 
-# Create scatterplot ------------------
+#!! Hier staat in antwoord nog data_combined en stap_om week aantal!!
+
 Example_LongFormat %>%
   ggplot(aes(x=Geslacht, y= vasPijnGemiddeld_1))+
   geom_point()
 
-# Create geom_jitter plot ------------------
 Example_LongFormat %>%
   ggplot(aes(x=Geslacht, y=vasPijnGemiddeld_1))+
   geom_jitter()
 
-# Create geom_quasi random plot ------------------
 Example_LongFormat %>%
   ggplot(aes(x=Geslacht, y=vasPijnGemiddeld_1))+
   geom_quasirandom()
 
-#  Na.omit. Distribution VAS pain by gender and remove missing data with na.omit --------
-# !! Hier staat op de website data_long en data_combined
+# Na.omit functie------------
+# Met de na.omit functie haal je de hele rij waar een missing value in zit eruit
+
 Example_LongFormat %>%
   na.omit() %>%
   ggplot(aes(x=Geslacht, y=vasPijnGemiddeld_1))+
   geom_jitter()
 
-# Different time point-------- rounddescription
-# !! Hier staat op de website data_long en data_combined
+view(Example_LongFormat)
+
+# nu de groep verdelen intake, 3 maanden en 12maanden middels rounddescription
 Example_LongFormat %>%
   na.omit() %>%
   ggplot(aes(x=rounddescription, y=vasPijnGemiddeld_1))+
   geom_jitter() +
-
-# Add  coordinate flip  and colour---------
-# !! Hier staat op de website data_long en data_combined
-
-Example_LongFormat %>%
-  na.omit() %>%
-  ggplot(aes(x=rounddescription, y=vasPijnGemiddeld_1))+
-  geom_point() +
   coord_flip()
 
-# Add  coordinate flip  and colour based on gender---------
+# nu voor geslacht in deze plot een andere kleur toevoegen
 #!! Hier staat in antwoord nog twee keer colour colour
+
 Example_LongFormat %>%
   na.omit() %>%
   ggplot(aes(x=rounddescription, y=vasPijnGemiddeld_1, colour = Geslacht))+
-  geom_point() +
+  geom_jitter() +
   coord_flip()
 
-# Facet wrap---------------- 
+# Facet wrap----------------
+# hiermee creeer je losse kleine grafieken voor in dit geval de verschillende meetmomenten
+
 # !! In het antwoord wordt ook nog verwezen naar data_combined
 
 Example_LongFormat %>%
@@ -68,7 +65,6 @@ Example_LongFormat %>%
   geom_jitter() +
   facet_wrap(~rounddescription)
 
-# Add colour based on gender
 Example_LongFormat %>%
   na.omit() %>%
   ggplot(aes(x=Geslacht, y=vasPijnGemiddeld_1, colour = Geslacht))+
@@ -76,8 +72,7 @@ Example_LongFormat %>%
   facet_wrap(~rounddescription)
 
 # Combinatie van filter en plot ------------- 
-#!! Hier staat het antwoord nog fout op de website (>100 en <0) . Volgens mij klopt het in onderstaand script
-# !! In het antwoord wordt ook nog verwezen naar data_combined
+#!! Hier staat het antwoord nog fout op de website
 
 Example_LongFormat %>%
   na.omit() %>% 
@@ -86,13 +81,12 @@ Example_LongFormat %>%
   ggplot(aes(x=Geslacht, y=vasPijnGemiddeld_1, colour = Geslacht))+
   geom_jitter() + facet_wrap(~rounddescription)
 
-# Save with ggsave -----------------
+# Opslaan met ggsave -----------------
 
 ggsave("VASpain.png")
 
-# Bar and colom graphs ----------
-
-#!! Er wordt nog verwezen naar dataset data_combined
+# Bar en colom graphs ----------
+#! Er wordt nog verwezen naar dataset data_combined
 Example_LongFormat %>%
   na.omit()%>%
   group_by(Geslacht)%>%
@@ -105,22 +99,21 @@ Example_LongFormat %>%
   geom_errorbar(aes(x=Geslacht, ymin = mean-stderr, ymax = mean+stderr))
 
 # Correlation and scatterplot -------------
-#!! Er wordt nog verwezen naar dataset data_combined
+#! Er wordt nog verwezen naar dataset data_combined
 Example_LongFormat%>%
   na.omit()%>%
   ggplot(aes(x= vasPijnGemiddeld_1, y= vasFunctie_1))+
   geom_point() +
   geom_smooth()
 
-# Add colour for gender
+# Kleur toevoegen voor geslacht
 Example_LongFormat%>%
   na.omit() %>%
   ggplot(aes(x= vasPijnGemiddeld_1, y= vasFunctie_1, colour=Geslacht))+
   geom_point() +
   geom_smooth()
 
-#VizWhiz 4 
-# Change background with theme ----------
+#VizWhiz 4 ------- veranderen van de achtergrond
 #! Er wordt nog verwezen naar dataset data_combined
 Example_LongFormat%>%
     na.omit() %>%
@@ -136,8 +129,7 @@ Example_LongFormat%>%
     geom_point() +
     geom_smooth()
 
-  # Layout graph title and axis ---------
-  #! Er wordt nog verwezen naar dataset data_combined
+  # Titel toeovegen en assen benoemen
   Example_LongFormat%>%
     na.omit() %>%
     ggplot(aes(x= vasPijnGemiddeld_1, y= vasFunctie_1, colour=Geslacht))+
