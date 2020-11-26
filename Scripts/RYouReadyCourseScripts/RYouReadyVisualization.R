@@ -75,7 +75,7 @@ Example_LongFormat %>%
   geom_jitter() +
   facet_wrap(~rounddescription)
 
-# Combinatie van filter en plot ------------- 
+# Combinaton filter and plot ------------- 
 #!! Hier staat het antwoord nog fout op de website (>100 en <0) . Volgens mij klopt het in onderstaand script
 # !! In het antwoord wordt ook nog verwezen naar data_combined
 
