@@ -10,6 +10,7 @@ load("~/Documents/GitHub/RCourseHWStudyGroup/data/Example_LongFormatHashed.RData
 
 # !! In de antwoorden wordt verwezen naar data_long, maar ik heb tot nu toe steeds Example_LongFormat 
 # gebruikt als dataframe. Ik zie in beide datasets overigens geen behandelingDatum als variabele staan (krijg als antwoord ook NULL).
+names(Example_LongFormat)
 
 view(data_long)
 
