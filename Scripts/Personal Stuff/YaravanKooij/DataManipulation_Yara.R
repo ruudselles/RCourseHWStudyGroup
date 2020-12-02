@@ -46,6 +46,7 @@ ggplot(Example_LongFormat, aes(x = behandelingDatum))+
 
 # Select only the two variables that we need for this analysis: After watching the screencast and the code for this plot, try to apply this code to the example dataset:
 # Ceate a similar plot to see if the pain scores during a summer differ from a winter
+# Hier mis ik het antwoord, welk ik hard nodig had ;-) 
 
 Painsummerwinter<-Example_LongFormat %>%
   select(vasPijnRust_1, behandelingDatum)
