@@ -31,3 +31,22 @@ data_combined %>%
 data_combined %>%
   ggplot(aes(x=Geslacht, y=vasPijnGemiddeld_1)) +
   geom_quasirandom()
+
+# Use of colors and more
+
+data_combined %>%
+  na.omit() %>%
+  ggplot(aes(x=Geslacht, y=vasPijnGemiddeld_1)) +
+  geom_jitter()
+
+data_combined %>%
+  na.omit() %>%
+  ggplot(aes(x=rounddescription, y=vasPijnGemiddeld_1)) +
+  geom_jitter() +
+  coord_flip()
+
+data_combined %>%
+  na.omit() %>%
+  ggplot(aes(x=rounddescription, y=vasPijnGemiddeld_1, color = Geslacht)) +
+  geom_jitter() +
+  coord_flip()
