@@ -84,7 +84,11 @@ PainMalesFemalesLeftRigth <- Example_LongFormat %>%
             SD_VASpain = sd(vasPijnGemiddeld_1, na.rm = TRUE))
 view(PainMalesFemalesLeftRigth)
   
-#Ik ben nu bij How to mutate
+#Mutate create variable pain average with "vasPijnGemiddeld_1","vasPijnRust_1",
+#"vasPijnBelasten_1")
+Example_LongFormat <- Example_LongFormat %>%
+  mutate(Pain_average = ((vasPijnGemiddeld_1 + vasPijnRust_1 + vasPijnBelasten_1)
+                         /3),na.rm=TRUE) %>%
+  mutate(vasPijnGemiddeld_50 = vasPijnGemiddeld_1 >50, na.rm=TRUE)
+view(Example_LongFormat)
 
-
-            
