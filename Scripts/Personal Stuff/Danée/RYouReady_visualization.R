@@ -46,3 +46,36 @@ Example_LongFormat %>%
   ggplot(aes(x = Geslacht, y = vasPijnGemiddeld_1, color = Geslacht)) +
   geom_jitter() + 
   facet_wrap(~ rounddescription)
+
+#save the plot
+ggsave(here("vaspijngem.png"))
+
+#using bar and column graphs
+Example_LongFormat %>%
+  na.omit() %>%
+  group_by(Geslacht) %>%
+  summarise(sd = sd(vasPijnGemiddeld_1),
+            n = n(),
+            mean = mean(vasPijnGemiddeld_1),
+            stderr = sd/sqrt(n)) %>%
+  ggplot(aes(x = Geslacht, y = mean)) +
+  geom_col() +
+  geom_errorbar(aes(x = Geslacht, ymin = mean-stderr, ymax = mean+stderr))
+
+#fit a line
+Example_LongFormat %>%
+  na.omit() %>%
+  ggplot(aes(x = vasPijnGemiddeld_1, y = vasFunctie_1, color = Geslacht)) +
+  geom_point() +
+  geom_smooth()
+
+#graph lay out
+Example_LongFormat %>%
+  na.omit() %>%
+  ggplot(aes(x = vasPijnGemiddeld_1, y = vasFunctie_1, color = Geslacht)) +
+  geom_point() +
+  geom_smooth() +
+  theme_classic() +
+  labs(title = "Relationship between pain and hand functon",
+       x = "VAS pain (0-10)",
+       y = "VAS function (0-10)")
